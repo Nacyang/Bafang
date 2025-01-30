@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bafang.mapper.RescueInfoMapper">
+
+    <select id="getRank" resultType="com.bafang.domain.dto.RankDTO">
+        SELECT DENSE_RANK() OVER (ORDER BY COUNT(*) DESC) AS "rank",
+               u.username,
+               COUNT(*) AS rescueCount
+        FROM rescue_info r
+                 LEFT JOIN user u ON r.uid = u.id
+        WHERE status = 2
+        GROUP BY r.uid, u.username
+        ORDER BY "rank";
+    </select>
+
+    <select id="getRescueInfo" resultType="com.bafang.domain.vo.RescueInfoVO">
+        SELECT r.id as rescueId,h.road_condition,h.weather_condition,h.assistance_type,
+               h.supplies_needed,h.detailed_address,h.created_at,h.phone_number,h.status
+        FROM rescue_info r
+                 LEFT JOIN help_request h ON r.help_id= h.id
+        WHERE r.uid = #{id}
+        ORDER BY h.created_at;
+    </select>
+</mapper>

@@ -1,0 +1,31 @@
+server:
+  port: 8080
+  address: 0.0.0.0
+spring:
+  application:
+    name: bafang
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/bafang
+    username: root
+    password: 123456
+  data:
+    redis:
+      database: 0
+      host: 127.0.0.1
+      port: 6379
+      password: 123456
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: AUTO
+sa-token:
+  token-name: Authorization
+  timeout: 36000
+  active-timeout: -1
+  is-concurrent: true
+  is-share: true
+  token-style: uuid
+  is-log: true
